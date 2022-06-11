@@ -7,10 +7,10 @@ WORKDIR /app
 COPY saleor-dashboard/package*.json ./
 RUN npm install
 COPY saleor-dashboard .
-ENV API_URI __ENV_API_URI__
-ENV APP_MOUNT_URI __ENV_APP_MOUNT_URI__
-ENV STATIC_URL __ENV_STATIC_URL__
-RUN STATIC_URL=${STATIC_URL} API_URI=${API_URI} APP_MOUNT_URI=${APP_MOUNT_URI} npm run build
+RUN STATIC_URL=__ENV_STATIC_URL__ \
+  API_URI=__ENV_API_URI__ \
+  APP_MOUNT_URI=__ENV_APP_MOUNT_URI__ \
+  npm run build
 
 FROM nginx:stable
 WORKDIR /app
