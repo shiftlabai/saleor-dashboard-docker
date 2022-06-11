@@ -16,6 +16,9 @@ FROM nginx:stable
 WORKDIR /app
 COPY saleor-dashboard/nginx/default.conf /etc/nginx/conf.d/default.conf
 COPY --from=builder /app/build/ /app-raw/
+
+# Scripts in `/docker-entrypoint.d/` are run by ngins:stable at startup; see
+# https://github.com/nginxinc/docker-nginx/blob/88018137053bdda23bd31fd61249b4b521eaffcf/entrypoint/docker-entrypoint.sh#L17∑
 COPY hydrate-env-vars.sh /docker-entrypoint.d/
 
 ARG APP_MOUNT_URI
