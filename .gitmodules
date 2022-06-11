@@ -1,0 +1,4 @@
+[submodule "saleor-dashboard"]
+	path = saleor-dashboard
+	url = https://github.com/saleor/saleor-dashboard.git
+	branch = 3.1
