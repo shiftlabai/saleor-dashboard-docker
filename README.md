@@ -1,6 +1,8 @@
 # Saleor Dashboard Docker
 
-A wrapper around the Saleor Dashboard that allows configuration of environment variables at runtime.
+[Saleor Dashboard](https://github.com/saleor/saleor-dashboard)'s [Dockerfile](https://github.com/saleor/saleor-dashboard/blob/main/Dockerfile) expects environment variables such as `API_URI` to be passed at build time, meaning that Docker images have the GraphQL API URI hard-coded into them.
+
+This repo builds a saleor-dashboard Docker image that allows configuration of all environment variables at _runtime_, rather than at build time.
 
 ## Getting started
 
@@ -11,7 +13,7 @@ A wrapper around the Saleor Dashboard that allows configuration of environment v
     git submodule update
     ```
 
-    (Or clone the repo with the `--recursive` option.)
+    (Or clone this repo with the `--recursive` option.)
 
 2. Build
 
