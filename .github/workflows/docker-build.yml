@@ -4,14 +4,16 @@ env:
   ECR_REPOSITORY: saleor-dashboard
 
 on:
+  schedule:
+    # Run every day at 3am
+    - cron: "0 3 * * *"
   push:
     branches:
       - main
-  pull_request:
 
 jobs:
   build-image:
-    strategy: 
+    strategy:
       matrix:
         saleor_version: ["3.0", "3.1"]
     runs-on: ubuntu-latest
