@@ -2,7 +2,6 @@ name: Saleor Dashboard CI-CD
 env:
   AWS_REGION: eu-west-1
   ECR_REPOSITORY: saleor-dashboard
-  SALEOR_DASHBOARD_VERSION: "3.0"
 
 on:
   push:
@@ -12,6 +11,9 @@ on:
 
 jobs:
   build-image:
+    strategy: 
+      matrix:
+        saleor_version: ["3.0", "3.1"]
     runs-on: ubuntu-latest
     outputs:
       ecr-registry: ${{ steps.login-ecr.outputs.registry }}
@@ -55,7 +57,7 @@ jobs:
       - name: Checkout Saleor Dashboard version
         working-directory: saleor-dashboard
         run: |
-          git checkout "${{ env.SALEOR_DASHBOARD_VERSION }}"
+          git checkout "${{ matrix.saleor_version }}"
 
       - name: Build, tag, and push to Amazon ECR
         uses: docker/build-push-action@v2
@@ -66,6 +68,6 @@ jobs:
           push: true
           tags: |
             ${{ env.TAG_PREFIX }}:${{ github.sha }}
-            ${{ env.TAG_PREFIX }}:${{ env.SALEOR_DASHBOARD_VERSION }}
-          cache-from: type=registry,ref=${{ env.TAG_PREFIX }}:${{ env.SALEOR_DASHBOARD_VERSION }}
+            ${{ env.TAG_PREFIX }}:${{ matrix.saleor_version }}
+          cache-from: type=registry,ref=${{ env.TAG_PREFIX }}:${{ matrix.saleor_version }}
           cache-to: type=inline
